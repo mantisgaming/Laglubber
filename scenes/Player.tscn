@@ -1,0 +1,58 @@
+[gd_scene load_steps=8 format=3 uid="uid://dtfpt23koisvo"]
+
+[ext_resource type="Script" uid="uid://bisvtijba0wsc" path="res://player/MovementController.gd" id="1_mdl7e"]
+[ext_resource type="Texture2D" uid="uid://b6lkcts4w3ifn" path="res://player/PlayerSprite.png" id="2_qu4a1"]
+[ext_resource type="Script" uid="uid://con2dkte43oaq" path="res://player/MovementReplayer.gd" id="3_70d11"]
+[ext_resource type="Script" uid="uid://d0aotwcl01w0i" path="res://player/PlayerInput.gd" id="4_cw2d6"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_83hs8"]
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x8kxw"]
+size = Vector2(16, 16)
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_mdl7e"]
+particle_flag_disable_z = true
+emission_shape = 3
+emission_box_extents = Vector3(14, 14, 14)
+angle_min = -720.0
+angle_max = 720.0
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -100.0
+radial_accel_max = 2.9099977
+
+[node name="Player" type="Node2D"]
+
+[node name="Main Character" type="CharacterBody2D" parent="."]
+
+[node name="MovementController" type="Node" parent="Main Character"]
+script = ExtResource("1_mdl7e")
+
+[node name="Sprite2D" type="Sprite2D" parent="Main Character"]
+texture = ExtResource("2_qu4a1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Main Character"]
+shape = SubResource("RectangleShape2D_83hs8")
+
+[node name="Lag Character" type="CharacterBody2D" parent="."]
+collision_layer = 0
+collision_mask = 0
+
+[node name="MovementController" type="Node" parent="Lag Character"]
+script = ExtResource("3_70d11")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lag Character"]
+shape = SubResource("RectangleShape2D_x8kxw")
+
+[node name="Sprite2D" type="Sprite2D" parent="Lag Character"]
+texture = ExtResource("2_qu4a1")
+
+[node name="GPUParticles2D" type="GPUParticles2D" parent="Lag Character"]
+amount = 64
+process_material = SubResource("ParticleProcessMaterial_mdl7e")
+
+[node name="Player Input" type="Node" parent="."]
+script = ExtResource("4_cw2d6")
+
+[connection signal="on_new_action" from="Player Input" to="Main Character/MovementController" method="do_action"]
+[connection signal="on_new_action" from="Player Input" to="Lag Character/MovementController" method="add_action"]

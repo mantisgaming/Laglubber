@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://dpnwsphryf3p2"]
+
+[ext_resource type="Script" uid="uid://dii8na5wrmun1" path="res://scenes/door.gd" id="1_mi6dp"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rhj8v"]
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_5l6vt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n4pas"]
+
+[node name="Button" type="Node2D"]
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+position = Vector2(62.999996, -2.3841858e-07)
+scale = Vector2(-13.905952, 45)
+texture = SubResource("PlaceholderTexture2D_rhj8v")
+script = ExtResource("1_mi6dp")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(20, 20)
+texture = SubResource("PlaceholderTexture2D_5l6vt")
+
+[node name="Area2D" type="Area2D" parent="Sprite2D"]
+scale = Vector2(0.049999997, 0.049999997)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
+shape = SubResource("RectangleShape2D_n4pas")
+
+[connection signal="body_entered" from="Sprite2D/Area2D" to="Sprite2D2" method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Sprite2D/Area2D" to="Sprite2D2" method="_on_area_2d_body_exited"]
