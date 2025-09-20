@@ -1,7 +1,12 @@
 extends Sprite2D
 
-func _on_area_2d_body_entered(body: Node2D) -> void:
+@onready var collider: CollisionShape2D = $StaticBody2D/CollisionShape2D
+
+func _on_area_2d_pressed(_body: Node) -> void:
+	collider.set_deferred("disabled", true)
 	hide()
 
-func _on_area_2d_body_exited(body: Node2D) -> void:
-	show() # Replace with function body.
+
+func _on_area_2d_released(_body: Node) -> void:
+	collider.set_deferred("disabled", false)
+	show()

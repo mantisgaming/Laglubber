@@ -1,8 +1,12 @@
-[gd_scene load_steps=5 format=3 uid="uid://dpnwsphryf3p2"]
+[gd_scene load_steps=7 format=3 uid="uid://dpnwsphryf3p2"]
 
-[ext_resource type="Script" uid="uid://dii8na5wrmun1" path="res://scenes/door.gd" id="1_mi6dp"]
+[ext_resource type="Script" uid="uid://cye2peb7wfaeg" path="res://scenes/door.gd" id="1_mi6dp"]
+[ext_resource type="Script" uid="uid://dii8na5wrmun1" path="res://scenes/button.gd" id="2_rhj8v"]
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_rhj8v"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rhj8v"]
+size = Vector2(1.0067632, 1.0222223)
 
 [sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_5l6vt"]
 
@@ -16,15 +20,25 @@ scale = Vector2(-13.905952, 45)
 texture = SubResource("PlaceholderTexture2D_rhj8v")
 script = ExtResource("1_mi6dp")
 
+[node name="StaticBody2D" type="StaticBody2D" parent="Sprite2D2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D2/StaticBody2D"]
+position = Vector2(0, -2.1192779e-08)
+scale = Vector2(0.99999976, 0.9999999)
+shape = SubResource("RectangleShape2D_rhj8v")
+
 [node name="Sprite2D" type="Sprite2D" parent="."]
 scale = Vector2(20, 20)
 texture = SubResource("PlaceholderTexture2D_5l6vt")
 
 [node name="Area2D" type="Area2D" parent="Sprite2D"]
 scale = Vector2(0.049999997, 0.049999997)
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("2_rhj8v")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Sprite2D/Area2D"]
 shape = SubResource("RectangleShape2D_n4pas")
 
-[connection signal="body_entered" from="Sprite2D/Area2D" to="Sprite2D2" method="_on_area_2d_body_entered"]
-[connection signal="body_exited" from="Sprite2D/Area2D" to="Sprite2D2" method="_on_area_2d_body_exited"]
+[connection signal="pressed" from="Sprite2D/Area2D" to="Sprite2D2" method="_on_area_2d_pressed"]
+[connection signal="released" from="Sprite2D/Area2D" to="Sprite2D2" method="_on_area_2d_released"]
